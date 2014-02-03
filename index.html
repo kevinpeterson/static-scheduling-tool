@@ -105,30 +105,29 @@
                 <table class="table table-bordered table-hover table-condensed">
                     <tr style="font-weight: bold">
                         <td style="width:40%">Name</td>
-                        <td style="width:30%">Status</td>
-                        <td style="width:30%">Group</td>
-                        <td style="width:30%"><span ng-show="tableform.$visible">Action</span></td>
+                        <td style="width:10%">Period</td>
+                        <td style="width:10%">WCET</td>
+                        <td style="width:10%">Offset</td>
+                        <td style="width:10%">Deadline</td>
+                        <td style="width:20%"><span ng-show="tableform.$visible">Action</span></td>
                     </tr>
-                    <tr ng-repeat="user in users | filter:filterUser">
+                    <tr ng-repeat="task in tasks">
                         <td>
-                            <!-- editable username (text with validation) -->
-          <span editable-text="user.name" e-form="tableform" onbeforesave="checkName($data, user.id)">
-            {{ user.name || 'empty' }}
-          </span>
+                             <span editable-text="task.name" e-form="tableform">{{ task.name }}</span>
                         </td>
                         <td>
-                            <!-- editable status (select-local) -->
-          <span editable-select="user.status" e-form="tableform" e-ng-options="s.value as s.text for s in statuses">
-            {{ showStatus(user) }}
-          </span>
+                            <span editable-text="task.period" e-form="tableform">{{ task.period }}</span>
                         </td>
                         <td>
-                            <!-- editable group (select-remote) -->
-          <span editable-select="user.group" e-form="tableform" onshow="loadGroups()" e-ng-options="g.id as g.text for g in groups">
-            {{ showGroup(user) }}
-          </span>
+                            <span editable-text="task.WCET" e-form="tableform">{{ task.WCET }}</span>
                         </td>
-                        <td><button type="button" ng-show="tableform.$visible" ng-click="deleteUser(user.id)" class="btn btn-danger pull-right">Del</button></td>
+                        <td>
+                            <span editable-text="task.offset" e-form="tableform">{{ task.offset }}</span>
+                        </td>
+                        <td>
+                            <span editable-text="task.deadline" e-form="tableform">{{ task.deadline }}</span>
+                        </td>
+                        <td><button type="button" ng-show="tableform.$visible" ng-click="deleteTask(user.id)" class="btn btn-danger pull-right">Del</button></td>
                     </tr>
                 </table>
 
@@ -139,7 +138,7 @@
                     </button>
                 </div>
                 <div class="btn-form" ng-show="tableform.$visible">
-                    <button type="button" ng-disabled="tableform.$waiting" ng-click="addUser()" class="btn btn-default pull-right">add row</button>
+                    <button type="button" ng-disabled="tableform.$waiting" ng-click="addTask()" class="btn btn-default pull-right">add row</button>
                     <button type="submit" ng-disabled="tableform.$waiting" class="btn btn-primary">save</button>
                     <button type="button" ng-disabled="tableform.$waiting" ng-click="tableform.$cancel()" class="btn btn-default">cancel</button>
                 </div>

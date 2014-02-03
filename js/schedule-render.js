@@ -2,6 +2,9 @@ function render_schedule(schedule) {
     var canvas = document.getElementById('schedule');
     var slot_size = 50;
     if (canvas.getContext) {
+        var context = canvas.getContext('2d');
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
         var tasks = schedule.workload.tasks;
 
         var colors = {};
@@ -17,7 +20,6 @@ function render_schedule(schedule) {
 
             context.beginPath();
             for(var j=0;j<periods;j++){
-
                 context.strokeStyle = color;
                 var step_size = task.period * slot_size;
                 context.moveTo(j * step_size, 160 + (i * 20));
