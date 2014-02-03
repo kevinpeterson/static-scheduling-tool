@@ -18,6 +18,7 @@
             }
         </style>
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="css/xeditable.css">
         <link rel="stylesheet" href="css/main.css">
 
         <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
@@ -96,6 +97,56 @@
         </div>
       </div>
 
+        <h4>Angular-xeditable Editable table (Bootstrap 3)</h4>
+        <div ng-app="app" ng-controller="Ctrl">
+            <form editable-form name="tableform" onaftersave="saveTable()" oncancel="cancel()">
+
+                <!-- table -->
+                <table class="table table-bordered table-hover table-condensed">
+                    <tr style="font-weight: bold">
+                        <td style="width:40%">Name</td>
+                        <td style="width:30%">Status</td>
+                        <td style="width:30%">Group</td>
+                        <td style="width:30%"><span ng-show="tableform.$visible">Action</span></td>
+                    </tr>
+                    <tr ng-repeat="user in users | filter:filterUser">
+                        <td>
+                            <!-- editable username (text with validation) -->
+          <span editable-text="user.name" e-form="tableform" onbeforesave="checkName($data, user.id)">
+            {{ user.name || 'empty' }}
+          </span>
+                        </td>
+                        <td>
+                            <!-- editable status (select-local) -->
+          <span editable-select="user.status" e-form="tableform" e-ng-options="s.value as s.text for s in statuses">
+            {{ showStatus(user) }}
+          </span>
+                        </td>
+                        <td>
+                            <!-- editable group (select-remote) -->
+          <span editable-select="user.group" e-form="tableform" onshow="loadGroups()" e-ng-options="g.id as g.text for g in groups">
+            {{ showGroup(user) }}
+          </span>
+                        </td>
+                        <td><button type="button" ng-show="tableform.$visible" ng-click="deleteUser(user.id)" class="btn btn-danger pull-right">Del</button></td>
+                    </tr>
+                </table>
+
+                <!-- buttons -->
+                <div class="btn-edit">
+                    <button type="button" class="btn btn-default" ng-show="!tableform.$visible" ng-click="tableform.$show()">
+                        edit
+                    </button>
+                </div>
+                <div class="btn-form" ng-show="tableform.$visible">
+                    <button type="button" ng-disabled="tableform.$waiting" ng-click="addUser()" class="btn btn-default pull-right">add row</button>
+                    <button type="submit" ng-disabled="tableform.$waiting" class="btn btn-primary">save</button>
+                    <button type="button" ng-disabled="tableform.$waiting" ng-click="tableform.$cancel()" class="btn btn-default">cancel</button>
+                </div>
+
+            </form>
+        </div>
+
         <canvas id="schedule" width="1200" height="1000"></canvas>
 
         <hr>
@@ -107,9 +158,12 @@
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
 
         <script src="js/vendor/bootstrap.min.js"></script>
-
+        <script src="js/vendor/angular.min.js"></script>
+        <script src="js/vendor/angular-mocks.js"></script>
+        <script src="js/vendor/xeditable.min.js"></script>
         <script src="js/non-preemptive-static-scheduler.js"></script>
         <script src="js/schedule-render.js"></script>
+        <script src="js/controller.js"></script>
         <script src="js/main.js"></script>
 
         <script>

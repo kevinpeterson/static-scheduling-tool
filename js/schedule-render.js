@@ -2,15 +2,6 @@ function render_schedule(schedule) {
     var canvas = document.getElementById('schedule');
     var slot_size = 50;
     if (canvas.getContext) {
-        for(var i=0;i<schedule.hyperperiod_size;i++){
-            var context = canvas.getContext('2d');
-            context.lineWidth = 2;
-            context.fillStyle = 'white';
-            context.strokeStyle = 'black';
-            context.fillRect(slot_size*i,100,slot_size,slot_size);
-            context.strokeRect(slot_size*i,100,slot_size,slot_size);
-        }
-
         var tasks = schedule.workload.tasks;
 
         var colors = {};
@@ -46,6 +37,15 @@ function render_schedule(schedule) {
             var context = canvas.getContext('2d');
             context.fillStyle = colors[job.task];
             context.fillRect(slot_size*job.start,100,slot_size*(job.end-job.start),slot_size);
+        }
+
+        for(var i=0;i<schedule.hyperperiod_size;i++){
+            var context = canvas.getContext('2d');
+            context.lineWidth = 2;
+            //context.fillStyle = 'white';
+            context.strokeStyle = 'black';
+            //context.fillRect(slot_size*i,100,slot_size,slot_size);
+            context.strokeRect(slot_size*i,100,slot_size,slot_size);
         }
 
     } else {

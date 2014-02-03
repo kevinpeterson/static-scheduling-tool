@@ -131,7 +131,7 @@ function simulate_hyperperiod(job_queue, hp_size){
 
     var current_job = job_queue.pop();
 
-    for(var i=current_job.start;i<hp_size;i++){
+    for(var i=current_job.start;i<hp_size;){
         var running_job = {
             task: current_job.task,
             start: i,
@@ -165,4 +165,4 @@ function running(job, clock_tick){
     return ( (job.start <= clock_tick) && (clock_tick < job.end) );
 }
 
-//console.log(schedule(workload));
+console.log(schedule(workload));
