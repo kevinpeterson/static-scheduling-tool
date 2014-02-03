@@ -25,7 +25,7 @@ workload = {
     ]
 };
 */
-
+/*
 workload = {
     tasks: [
         {
@@ -44,6 +44,7 @@ workload = {
         }
     ]
 };
+*/
 
 function hyperperiod_size(workload){
     var tasks = workload.tasks;

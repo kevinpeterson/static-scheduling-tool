@@ -1,3 +1,4 @@
+/*
 workload = {
     tasks: [
         {
@@ -23,5 +24,6 @@ workload = {
         }
     ]
 };
+*/
 
 //render_schedule(schedule(workload));
