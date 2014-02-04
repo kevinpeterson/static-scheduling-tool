@@ -18,7 +18,6 @@
             }
         </style>
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="css/xeditable.css">
         <link rel="stylesheet" href="css/main.css">
 
         <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
@@ -103,7 +102,7 @@
                 <!-- table -->
                 <table class="table table-bordered table-hover table-condensed">
                     <tr style="font-weight: bold">
-                        <td style="width:40%">Name {{workloadForm.period.$error.valid}}</td>
+                        <td style="width:40%">Task Name</td>
                         <td style="width:10%">Period</td>
                         <td style="width:10%">WCET</td>
                         <td style="width:10%">Offset</td>
@@ -155,7 +154,9 @@
             </form>
         </div>
 
-        <canvas id="schedule" width="1200" height="500"></canvas>
+        <div class="canvas">
+            <canvas id="schedule" width="1200" height="500"></canvas>
+        </div>
 
         <hr>
 
@@ -168,7 +169,6 @@
         <script src="js/vendor/bootstrap.min.js"></script>
         <script src="js/vendor/angular.min.js"></script>
         <script src="js/vendor/validate.js"></script>
-        <script src="js/vendor/xeditable.min.js"></script>
         <script src="js/non-preemptive-static-scheduler.js"></script>
         <script src="js/schedule-render.js"></script>
         <script src="js/controller.js"></script>

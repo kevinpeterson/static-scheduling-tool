@@ -34,17 +34,17 @@ function render_schedule(schedule) {
             for(var j=0;j<periods;j++){
                 context.strokeStyle = color;
                 var step_size = task.period * slot_size;
-                context.moveTo(padding + j * step_size, 160 + (i * 20));
-                context.lineTo(padding + j * step_size, 180 + (i * 20));
-                context.moveTo(padding + j * step_size, 170 + (i * 20));
-                context.lineTo(padding + j * step_size + step_size, 170 + (i * 20));
-                context.moveTo(padding + j * step_size + step_size, 180 + (i * 20));
-                context.lineTo(padding + j * step_size + step_size, 160 + (i * 20));
+                context.moveTo(padding + j * step_size, slot_size + padding*2 + (i * 20));
+                context.lineTo(padding + j * step_size, slot_size + padding*2 + 20 + (i * 20));
+                context.moveTo(padding + j * step_size, slot_size + padding*2 + 10 + (i * 20));
+                context.lineTo(padding + j * step_size + step_size, slot_size + padding*2 + 10 + (i * 20));
+                context.moveTo(padding + j * step_size + step_size, slot_size + padding*2 + 20 + (i * 20));
+                context.lineTo(padding + j * step_size + step_size, slot_size + padding*2 + (i * 20));
                 context.stroke();
             }
 
             context.fillStyle = color;
-            context.fillText(task.name, padding + schedule.hyperperiod_size * slot_size + 10, 170 + (i * 20));
+            context.fillText(task.name, padding + schedule.hyperperiod_size * slot_size + 10, slot_size + padding*2 + 10 + (i * 20));
             context.closePath();
         }
 
@@ -53,14 +53,14 @@ function render_schedule(schedule) {
             var job = jobs[i];
             var context = canvas.getContext('2d');
             context.fillStyle = colors[job.task];
-            context.fillRect(padding + slot_size*job.start,100,slot_size*(job.end-job.start),slot_size);
+            context.fillRect(padding + slot_size*job.start,padding,slot_size*(job.end-job.start),slot_size);
         }
 
         for(var i=0;i<schedule.hyperperiod_size;i++){
             var context = canvas.getContext('2d');
             context.lineWidth = 2;
             context.strokeStyle = 'black';
-            context.strokeRect(padding + slot_size*i,100,slot_size,slot_size);
+            context.strokeRect(padding + slot_size*i,padding,slot_size,slot_size);
         }
 
     } else {

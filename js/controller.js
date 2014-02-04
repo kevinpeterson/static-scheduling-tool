@@ -12,9 +12,9 @@ app.controller('Ctrl', function($scope, $filter, $q, $http) {
     // add
     $scope.addTask = function() {
         $scope.tasks.push({
-            name: "New Task" + $scope.tasks.length+1,
-            period: 0,
-            WCET: 0,
+            name: "New Task" + ($scope.tasks.length+1).toString(),
+            period: null,
+            WCET: null,
             offset: 0,
             deadline: 0
         });
@@ -23,6 +23,14 @@ app.controller('Ctrl', function($scope, $filter, $q, $http) {
     // delete
     $scope.deleteTask = function(task) {
         console.log(task);
+
+        var tasks = $scope.tasks;
+        for(var i=0;i<tasks.length;i++){
+            if(tasks[i] == task){
+                tasks.splice(i, 1);
+                break;
+            }
+        }
     };
 
     $scope.schedule = function() {
@@ -35,7 +43,7 @@ app.controller('Ctrl', function($scope, $filter, $q, $http) {
     };
 
     $scope.isEmpty = function(val) {
-        var isEmpty = !val || val === ''
+        var isEmpty = !val || val === '';
         return isEmpty;
     };
 
