@@ -1,13 +1,16 @@
 
+input.ng-invalid {
+    border-color: red;
+    outline-color: red;
+}
 
-/* ==========================================================================
-   Author's custom styles
-   ========================================================================== */
+.error {
+    color: red;
+}
 
-
-
-
-
+.container {
+    width: 1200px;
+}
 
 
 

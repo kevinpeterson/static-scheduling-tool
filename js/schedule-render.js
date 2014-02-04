@@ -1,6 +1,6 @@
 function render_schedule(schedule) {
     var canvas = document.getElementById('schedule');
-    var slot_size = canvas.width / schedule.hyperperiod_size;
+    var slot_size = (canvas.width - 100) / schedule.hyperperiod_size;
     slot_size = slot_size > 50 ? 50 : slot_size;
 
     var padding = 5;

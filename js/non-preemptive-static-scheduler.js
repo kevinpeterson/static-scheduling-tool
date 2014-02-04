@@ -166,4 +166,4 @@ function running(job, clock_tick){
     return ( (job.start <= clock_tick) && (clock_tick < job.end) );
 }
 
-console.log(schedule(workload));
+//console.log(schedule(workload));
