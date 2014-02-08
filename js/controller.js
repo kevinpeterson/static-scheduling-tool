@@ -9,6 +9,8 @@ app.controller('Ctrl', function($scope, $filter, $q, $http) {
         {name: 'task3', period: 2, WCET: 1, offset: 0, deadline: 2}
     ];
 
+    $scope.tests = [];
+
     // add
     $scope.addTask = function() {
         $scope.tasks.push({
@@ -34,7 +36,9 @@ app.controller('Ctrl', function($scope, $filter, $q, $http) {
     };
 
     $scope.schedule = function() {
-        render_schedule(schedule({tasks:$scope.tasks}));
+        var schedule_ = schedule({tasks:$scope.tasks});
+        render_schedule(schedule_);
+        $scope.tests = check_schedule(schedule_);
     };
 
     $scope.isNumber = function(val) {

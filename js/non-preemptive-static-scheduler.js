@@ -152,6 +152,10 @@ function simulate_hyperperiod(job_queue, hp_size){
         }
     }
 
+    if(current_job){
+        job_queue.push(current_job);
+    }
+
     for(var k=0;k<job_queue.length;k++){
         console.log("Left:", job_queue[k].name);
     }

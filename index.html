@@ -46,7 +46,7 @@
       </div>
     </div>
 
-    <div class="container">
+    <div ng-app="app" ng-controller="Ctrl" class="container">
 
         <!-- Main jumbotron for a primary marketing message or call to action -->
         <div class="jumbotron">
@@ -58,7 +58,7 @@
         </div>
 
         <h4>Workload Tasks</h4>
-        <div ng-app="app" ng-controller="Ctrl">
+        <div>
             <form name="workloadForm" novalidate>
                 <!-- table -->
                 <table class="table table-bordered table-hover table-condensed">
@@ -72,7 +72,7 @@
                     </tr>
                     <tr ng-repeat="task in tasks">
                         <td>
-                            <input type="text" name="name" ng-model="task.name" ng-minlength="5" required/>
+                            <input type="text" name="name" ng-model="task.name" required/>
                             <p class="error" ng-show="workloadForm.name.$invalid">Not valid</p>
                         </td>
                         <td>
@@ -113,24 +113,36 @@
                     <button type="button" ng-disabled="workloadForm.$invalid" ng-click="schedule()" class="btn btn-primary">Schedule</button>
                 </div>
             </form>
+
         </div>
 
         <div class="canvas">
-            <canvas id="schedule" width="1200" height="500"></canvas>
+            <canvas id="schedule" width="1200"></canvas>
+        </div>
+
+        <h4>Verification</h4>
+        <div ng-repeat="test in tests">
+            {{test.test}}
+            <ul ng-repeat="(key,result) in test.results">
+                {{key}} - {{result}}
+            </ul>
         </div>
 
         <hr>
 
-      <footer>
-        <p>&copy; Company 2013</p>
+        <footer>
+
       </footer>
-    </div> <!-- /container -->        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    </div>
+        <!-- /container -->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
 
         <script src="js/vendor/bootstrap.min.js"></script>
         <script src="js/vendor/angular.min.js"></script>
         <script src="js/vendor/validate.js"></script>
         <script src="js/non-preemptive-static-scheduler.js"></script>
+        <script src="js/schedule-checker.js"></script>
         <script src="js/schedule-render.js"></script>
         <script src="js/controller.js"></script>
         <script src="js/main.js"></script>
