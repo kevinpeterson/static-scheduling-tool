@@ -1,9 +1,18 @@
+var ideal_canvas_width = 1200;
+
 function render_schedule(schedule) {
     var canvas = document.getElementById('schedule');
-    var slot_size = (canvas.width - 100) / schedule.hyperperiod_size;
+    var slot_size = (ideal_canvas_width - 100) / schedule.hyperperiod_size;
     slot_size = slot_size > 50 ? 50 : slot_size;
+    if(slot_size < 10){
+        slot_size = 10;
+        canvas.width = slot_size * schedule.hyperperiod_size + 100;
+    } else {
+        canvas.width = ideal_canvas_width;
+    }
 
-    var padding = 5;
+    var x_padding = 50;
+    var y_padding = 20;
 
     if (canvas.getContext) {
         var context = canvas.getContext('2d');
@@ -34,18 +43,28 @@ function render_schedule(schedule) {
             for(var j=0;j<periods;j++){
                 context.strokeStyle = color;
                 var step_size = task.period * slot_size;
-                context.moveTo(padding + j * step_size, slot_size + padding*2 + (i * 20));
-                context.lineTo(padding + j * step_size, slot_size + padding*2 + 20 + (i * 20));
-                context.moveTo(padding + j * step_size, slot_size + padding*2 + 10 + (i * 20));
-                context.lineTo(padding + j * step_size + step_size, slot_size + padding*2 + 10 + (i * 20));
-                context.moveTo(padding + j * step_size + step_size, slot_size + padding*2 + 20 + (i * 20));
-                context.lineTo(padding + j * step_size + step_size, slot_size + padding*2 + (i * 20));
+                context.moveTo(x_padding + j * step_size, slot_size + y_padding*2 + (i * 20));
+                context.lineTo(x_padding + j * step_size, slot_size + y_padding*2 + 20 + (i * 20));
+                context.moveTo(x_padding + j * step_size, slot_size + y_padding*2 + 10 + (i * 20));
+                context.lineTo(x_padding + j * step_size + step_size, slot_size + y_padding*2 + 10 + (i * 20));
+                context.moveTo(x_padding + j * step_size + step_size, slot_size + y_padding*2 + 20 + (i * 20));
+                context.lineTo(x_padding + j * step_size + step_size, slot_size + y_padding*2 + (i * 20));
                 context.stroke();
             }
 
             context.fillStyle = color;
             context.font = '18pt Calibri';
-            context.fillText(task.name, padding + schedule.hyperperiod_size * slot_size + 10, slot_size + padding*2 + 10 + (i * 20) + 7);
+            context.fillText(task.name, x_padding + schedule.hyperperiod_size * slot_size + 10, slot_size + y_padding*2 + 10 + (i * 20) + 7);
+            context.closePath();
+        }
+
+        var number_step_size = Math.ceil(schedule.hyperperiod_size / 20);
+        for(var i=0;i<=schedule.hyperperiod_size;i += number_step_size){
+            context.beginPath();
+            context.font = '12pt Calibri';
+            context.strokeStyle = color;
+            context.fillText(i.toString(), i*slot_size-6 + x_padding, y_padding - 10);
+            context.stroke();
             context.closePath();
         }
 
@@ -54,14 +73,14 @@ function render_schedule(schedule) {
             var job = jobs[i];
             var context = canvas.getContext('2d');
             context.fillStyle = colors[job.task];
-            context.fillRect(padding + slot_size*job.start,padding,slot_size*(job.end-job.start),slot_size);
+            context.fillRect(x_padding + slot_size*job.start,y_padding,slot_size*(job.end-job.start),slot_size);
         }
 
         for(var i=0;i<schedule.hyperperiod_size;i++){
             var context = canvas.getContext('2d');
             context.lineWidth = 2;
             context.strokeStyle = 'black';
-            context.strokeRect(padding + slot_size*i,padding,slot_size,slot_size);
+            context.strokeRect(x_padding + slot_size*i,y_padding,slot_size,slot_size);
         }
 
     } else {

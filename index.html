@@ -172,9 +172,18 @@
         </div>
         <div>
             <span class="testCase">
-                <span ng-show="check_each_task_executes_in_period" class="label label-info"><span class="glyphicon glyphicon-thumbs-up"></span></span>
-                <span ng-show="!check_each_task_executes_in_period" class="label label-danger"><span class="glyphicon glyphicon-thumbs-down"></span></span>
-                Every Task Executes at its Required Period Between its Required Offset and Deadline Constraints
+                <span ng-show="check_each_task_executes_in_period.total_result" class="label label-info"><span class="glyphicon glyphicon-thumbs-up"></span></span>
+                <span ng-show="!check_each_task_executes_in_period.total_result" class="label label-danger"><span class="glyphicon glyphicon-thumbs-down"></span></span>
+                Every Job Executes at its Required Period Between its Required Offset and Deadline Constraints
+                <span ng-show="!check_each_task_executes_in_period.total_result">
+                   <span ng-repeat="(task, result) in check_each_task_executes_in_period.task_results">
+                       <ul ng-repeat="missed_deadline in result.missed_deadlines">
+                            <li>
+                                <span>A Scheduled Job <span class="label label-danger">Task: {{missed_deadline.task}}, Start: {{missed_deadline.start}}, End: {{missed_deadline.end}}</span> did not meet its start or end time deadlines.</span>
+                            </li>
+                       </ul>
+                   </span>
+                </span>
             </span>
         </div>
 

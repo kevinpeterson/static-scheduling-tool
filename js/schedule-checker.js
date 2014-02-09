@@ -32,6 +32,8 @@ function check_each_task_executes_in_period(schedule){
 
         var periods = schedule.hyperperiod_size / task.period;
 
+        var missed_deadlines = [];
+
         var counter = 0;
         for(var j=0;j<periods;j++){
             var period_start = j*task.period;
@@ -43,14 +45,16 @@ function check_each_task_executes_in_period(schedule){
                     &&
                     (job.end <= (period_start + task.deadline))){
                     counter++;
+                } else {
+                    missed_deadlines.push(job);
                 }
             }
         }
-        if(counter === periods){
-            results[task.name] = true;
+        if(counter === periods && missed_deadlines.length == 0){
+            results[task.name] = {ok: true, missed_deadlines: []};
         } else {
             result = false;
-            results[task.name] = false;
+            results[task.name] = {ok: true, missed_deadlines: missed_deadlines};
         }
     }
 
@@ -100,7 +104,7 @@ function check_no_jobs_overlap(schedule){
 function find_job_in_period(start, end, task, jobs){
     for(var i=0;i<jobs.length;i++){
         var job = jobs[i];
-        if(job.task === task && job.start >= start && job.end <= end){
+        if(job.task === task && job.start >= start && job.start < end){
             return job;
         }
     }

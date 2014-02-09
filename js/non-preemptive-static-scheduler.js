@@ -1,50 +1,4 @@
-/*
-workload = {
-    tasks: [
-        {
-            name: "task1",
-            period:10,
-            WCET:2,
-            offset:0,
-            deadline:10
-        },
-        {
-            name: "task2",
-            period:10,
-            WCET:2,
-            offset:0,
-            deadline:10
-        },
-        {
-            name: "task3",
-            period:20,
-            WCET:1,
-            offset:5,
-            deadline:20
-        }
-    ]
-};
-*/
-/*
-workload = {
-    tasks: [
-        {
-            name: "task1",
-            period:4,
-            WCET:2,
-            offset:0,
-            deadline:4
-        },
-        {
-            name: "task2",
-            period:6,
-            WCET:3,
-            offset:0,
-            deadline:6
-        }
-    ]
-};
-*/
+var debug = false;
 
 function hyperperiod_size(workload){
     var tasks = workload.tasks;
@@ -118,7 +72,8 @@ function schedule(workload){
         }
     }
 
-    console.log(job_queue);
+    if(debug) console.log(job_queue);
+
     var schedule = simulate_hyperperiod(job_queue.reverse(), hp_size);
 
     schedule.workload = workload;
@@ -138,9 +93,9 @@ function simulate_hyperperiod(job_queue, hp_size){
             start: i,
             end: (i + current_job.WCET)
         };
-        console.log("Running:", running_job.task, " at:", i);
+        if(debug) console.log("Running:", running_job.task, " at:", i);
         while(running(running_job, i)){ i++ };
-        console.log("Ending:", running_job.task, " at:", i);
+        if(debug) console.log("Ending:", running_job.task, " at:", i);
 
         schedule.push(running_job);
 
@@ -156,7 +111,7 @@ function simulate_hyperperiod(job_queue, hp_size){
         job_queue.push(current_job);
     }
 
-    for(var k=0;k<job_queue.length;k++){
+    for(var k=0;k<job_queue.length && debug;k++){
         console.log("Left:", job_queue[k].name);
     }
 
@@ -169,5 +124,3 @@ function simulate_hyperperiod(job_queue, hp_size){
 function running(job, clock_tick){
     return ( (job.start <= clock_tick) && (clock_tick < job.end) );
 }
-
-//console.log(schedule(workload));
