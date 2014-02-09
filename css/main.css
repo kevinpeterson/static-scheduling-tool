@@ -16,19 +16,7 @@ input.ng-invalid {
     margin-top: 50px;
 }
 
-.schedulable {
-    font-family: 'sans-serif';
-    background:lightgreen;
-    font-size: 20pt;
-    margin: 20px;
-}
-
-.unschedulable {
-    font-family: 'sans-serif';
-    background:red;
-    font-size: 20pt;
-    margin: 20px;
-}
+.im-centered{margin: auto; max-width: 300px;}
 
 
 

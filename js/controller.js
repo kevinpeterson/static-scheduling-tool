@@ -13,8 +13,6 @@ app.controller('Ctrl', function($scope, $filter, $q, $http) {
         $scope.schedule();
     }, true);
 
-    $scope.tests = [];
-
     // add
     $scope.addTask = function() {
         $scope.tasks.push({
@@ -44,9 +42,12 @@ app.controller('Ctrl', function($scope, $filter, $q, $http) {
         if($scope.workloadForm.$valid){
             var schedule_ = schedule({tasks:$scope.tasks});
             render_schedule(schedule_);
-            $scope.tests = check_schedule(schedule_);
             $scope.cpu_utilization = Math.round(check_cpu_utilization($scope.tasks) * 100);
             $scope.schedulable = is_schedulable(schedule_);
+            $scope.check_no_jobs_unscheduled = check_no_jobs_unscheduled(schedule_);
+            $scope.check_each_task_executes_in_period = check_each_task_executes_in_period(schedule_);
+            $scope.check_no_jobs_overlap = check_no_jobs_overlap(schedule_);
+            $scope.check_job_intervals = check_job_intervals(schedule_);
         }
     };
 

@@ -48,19 +48,27 @@
 
     <div ng-app="app" ng-controller="Ctrl" class="container">
 
-        <!-- Main jumbotron for a primary marketing message or call to action -->
-        <div class="jumbotron">
-            <div class="container">
-                <h1>Scheduler</h1>
-                <p>Non-Preemptive Earliest Deadline Scheduling</p>
-                <p><a class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="well well-lg">
+                        <h1>Scheduler</h1>
+                        <p>Non-Preemptive Deadline Monotonic Scheduling</p>
+                        <p><a class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+                </div>
+            </div>
+            <div class="col-md-6"  class="pull-right" >
+                <just-gage id="test1" min=0 max=100 value="cpu_utilization" title="CPU Utilization" label="%"></just-gage>
+                <div ng-if="schedulable">
+                    <h3 style="text-align:center;"><span class="label label-success">Schedulable - All Systems Go!</span></h3>
+                </div>
+                <div ng-if="!schedulable">
+                    <h3 style="text-align:center;"><span class="label label-danger">Not Schedulable - Hope you packed your 'chute</span></h3>
+                </div>
             </div>
         </div>
 
-        <h4>Workload Tasks</h4>
         <div>
             <form name="workloadForm" novalidate>
-                <just-gage id="test1" min=0 max=100 value="cpu_utilization" title="CPU Utilization" label="%"></just-gage>
 
                 <!-- table -->
                 <table class="table table-bordered table-hover table-condensed">
@@ -72,7 +80,7 @@
                         <td style="width:10%">Deadline</td>
                         <td style="width:10%"><span>Action</span></td>
                     </tr>
-                    <tr ng-repeat="task in tasks | orderBy:'name'">
+                    <tr ng-repeat="task in tasks | orderBy:'id'">
                         <td>
                             <input type="text" name="name" ng-model="task.name" required/>
                             <p class="error" ng-show="workloadForm.name.$invalid">Not valid</p>
@@ -112,29 +120,36 @@
 
                 <!-- buttons -->
                 <div class="btn-edit">
-                    <button type="button" class="btn btn-danger pull-right" ng-click="addTask()">Add Task</button>
+                    <button type="button" class="btn btn-danger" ng-click="addTask()">Add Task</button>
                 </div>
             </form>
 
         </div>
 
+        <hr>
+        <h3><span class="glyphicon glyphicon-list"></span> Schedule</h3>
+        <hr>
         <div class="canvas">
             <canvas id="schedule" width="1200"></canvas>
         </div>
 
-        <h4>Verification</h4>
+        <hr>
+        <h3><span class="glyphicon glyphicon-ok-circle"></span> Verification</h3>
+        <hr>
 
-        <div ng-if="schedulable">
-            <h3><span class="label label-success">Schedulable - You're good, Jim.</span></h3>
+        <div>
+            <span>CPU Utilization <= 100%:</span>
+            <span ng-show="cpu_utilization <= 100" class="label label-info"><span class="glyphicon glyphicon-thumbs-up"></span></span>
+            <span ng-show="cpu_utilization > 100" class="label label-danger"><span class="glyphicon glyphicon-thumbs-down"></span></span>
         </div>
-        <div ng-if="!schedulable">
-            <h3><span class="label label-danger">Not Schedulable - Hope you packed your 'chute</span></h3>
-        </div>
-
-        <div ng-repeat="test in tests">
-            {{test.test}}
-            <ul ng-repeat="(key,result) in test.results">
-                {{key}} - {{result}}
+        <div>
+            <span>No Jobs Unscheduled:</span>
+            <span ng-show="check_no_jobs_unscheduled.length == 0" class="label label-info"><span class="glyphicon glyphicon-thumbs-up"></span></span>
+            <span ng-show="check_no_jobs_unscheduled.length > 0" class="label label-danger"><span class="glyphicon glyphicon-thumbs-down"></span></span>
+            <ul ng-show="check_no_jobs_unscheduled.length > 0">
+                <li ng-repeat="unscheduled in check_no_jobs_unscheduled">
+                    <span>Task <span class="label label-danger">{{unscheduled.task}}</span> missed a scheduled job.</span>
+                </li>
             </ul>
         </div>
 

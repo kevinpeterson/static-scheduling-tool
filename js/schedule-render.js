@@ -44,7 +44,8 @@ function render_schedule(schedule) {
             }
 
             context.fillStyle = color;
-            context.fillText(task.name, padding + schedule.hyperperiod_size * slot_size + 10, slot_size + padding*2 + 10 + (i * 20));
+            context.font = '18pt Calibri';
+            context.fillText(task.name, padding + schedule.hyperperiod_size * slot_size + 10, slot_size + padding*2 + 10 + (i * 20) + 7);
             context.closePath();
         }
 

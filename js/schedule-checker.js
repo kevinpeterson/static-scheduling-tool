@@ -9,39 +9,23 @@
 */
 
 function is_schedulable(schedule){
-    return check_cpu_utilization(schedule.workload.tasks) <= 1;
-}
-
-function check_schedule(schedule){
-    var test_results = [];
-
-    test_results.push({
-        test: "Executes In Required Period Between Offset and Deadline",
-        results: check_each_task_executes_in_period(schedule)
-    });
-
-    test_results.push({
-        test: "No Jobs Overlap",
-        results: {"schedule" : check_no_jobs_overlap(schedule)}
-    });
-
-    test_results.push({
-        test: "No Jobs Unscheduled",
-        results: {"schedule" : check_no_jobs_unscheduled(schedule)}
-    });
-
-    test_results.push({
-        test: "Job Intervals Cover WCET",
-        results: {"schedule" : check_job_intervals(schedule)}
-    });
-
-    return test_results;
+    return (check_cpu_utilization(schedule.workload.tasks) <= 1)
+        &&
+        (check_each_task_executes_in_period(schedule).total_result)
+        &&
+        (check_no_jobs_overlap(schedule))
+        &&
+        (check_no_jobs_unscheduled(schedule).length == 0)
+        &&
+        (check_job_intervals(schedule));
 }
 
 function check_each_task_executes_in_period(schedule){
     var results = {};
 
     var tasks = schedule.workload.tasks;
+
+    var result = true;
 
     for(var i=0;i<tasks.length;i++){
         var task = tasks[i];
@@ -65,11 +49,12 @@ function check_each_task_executes_in_period(schedule){
         if(counter === periods){
             results[task.name] = true;
         } else {
+            result = false;
             results[task.name] = false;
         }
     }
 
-    return results;
+    return {total_result: result, task_results: results};
 }
 
 function initialize_empty_array(size){
