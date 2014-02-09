@@ -138,19 +138,44 @@
         <hr>
 
         <div>
-            <span>CPU Utilization <= 100%:</span>
-            <span ng-show="cpu_utilization <= 100" class="label label-info"><span class="glyphicon glyphicon-thumbs-up"></span></span>
-            <span ng-show="cpu_utilization > 100" class="label label-danger"><span class="glyphicon glyphicon-thumbs-down"></span></span>
+            <span class="testCase">
+                <span ng-show="cpu_utilization <= 100" class="label label-info"><span class="glyphicon glyphicon-thumbs-up"></span></span>
+                <span ng-show="cpu_utilization > 100" class="label label-danger"><span class="glyphicon glyphicon-thumbs-down"></span></span>
+                CPU Utilization <= 100%
+            </span>
         </div>
         <div>
-            <span>No Jobs Unscheduled:</span>
-            <span ng-show="check_no_jobs_unscheduled.length == 0" class="label label-info"><span class="glyphicon glyphicon-thumbs-up"></span></span>
-            <span ng-show="check_no_jobs_unscheduled.length > 0" class="label label-danger"><span class="glyphicon glyphicon-thumbs-down"></span></span>
-            <ul ng-show="check_no_jobs_unscheduled.length > 0">
-                <li ng-repeat="unscheduled in check_no_jobs_unscheduled">
-                    <span>Task <span class="label label-danger">{{unscheduled.task}}</span> missed a scheduled job.</span>
-                </li>
-            </ul>
+            <span class="testCase">
+                <span ng-show="check_no_jobs_unscheduled.length == 0" class="label label-info"><span class="glyphicon glyphicon-thumbs-up"></span></span>
+                <span ng-show="check_no_jobs_unscheduled.length > 0" class="label label-danger"><span class="glyphicon glyphicon-thumbs-down"></span></span>
+                No Jobs Unscheduled
+                <ul ng-show="check_no_jobs_unscheduled.length > 0">
+                    <li ng-repeat="unscheduled in check_no_jobs_unscheduled">
+                        <span>Task <span class="label label-danger">{{unscheduled.task}}</span> missed a scheduled job.</span>
+                    </li>
+                </ul>
+            </span>
+        </div>
+        <div>
+            <span class="testCase">
+                <span ng-show="check_no_jobs_overlap" class="label label-info"><span class="glyphicon glyphicon-thumbs-up"></span></span>
+                <span ng-show="!check_no_jobs_overlap" class="label label-danger"><span class="glyphicon glyphicon-thumbs-down"></span></span>
+                No Jobs Overlap
+            </span>
+        </div>
+        <div>
+            <span class="testCase">
+                <span ng-show="check_job_intervals" class="label label-info"><span class="glyphicon glyphicon-thumbs-up"></span></span>
+                <span ng-show="!check_job_intervals" class="label label-danger"><span class="glyphicon glyphicon-thumbs-down"></span></span>
+                Schedule Reserves Enough Time for WCET
+            </span>
+        </div>
+        <div>
+            <span class="testCase">
+                <span ng-show="check_each_task_executes_in_period" class="label label-info"><span class="glyphicon glyphicon-thumbs-up"></span></span>
+                <span ng-show="!check_each_task_executes_in_period" class="label label-danger"><span class="glyphicon glyphicon-thumbs-down"></span></span>
+                Every Task Executes at its Required Period Between its Required Offset and Deadline Constraints
+            </span>
         </div>
 
         <hr>
