@@ -1,24 +1,29 @@
-var app = angular.module("app", ['ui.validate']);
+var app = angular.module("app", ['ui.validate', 'ngJustGage']);
 
 app.run();
 
 app.controller('Ctrl', function($scope, $filter, $q, $http) {
     $scope.tasks = [
-        {name: 'task1', period: 2, WCET: 1, offset: 0, deadline: 2},
-        {name: 'task2', period: 4, WCET: 1, offset: 0, deadline: 2},
-        {name: 'task3', period: 2, WCET: 1, offset: 0, deadline: 2}
+        {id: 0, name: 'task1', period: 3, WCET: 1, offset: 0, deadline: 3},
+        {id: 1, name: 'task2', period: 4, WCET: 1, offset: 0, deadline: 4},
+        {id: 2, name: 'task3', period: 6, WCET: 1, offset: 0, deadline: 6}
     ];
+
+    $scope.$watch('tasks', function(){
+        $scope.schedule();
+    }, true);
 
     $scope.tests = [];
 
     // add
     $scope.addTask = function() {
         $scope.tasks.push({
-            name: "New Task" + ($scope.tasks.length+1).toString(),
-            period: null,
-            WCET: null,
+            id: $scope.tasks.length,
+            name: "New Task " + ($scope.tasks.length+1).toString(),
+            period: 4,
+            WCET: 1,
             offset: 0,
-            deadline: 0
+            deadline: 4
         });
     };
 
@@ -36,9 +41,13 @@ app.controller('Ctrl', function($scope, $filter, $q, $http) {
     };
 
     $scope.schedule = function() {
-        var schedule_ = schedule({tasks:$scope.tasks});
-        render_schedule(schedule_);
-        $scope.tests = check_schedule(schedule_);
+        if($scope.workloadForm.$valid){
+            var schedule_ = schedule({tasks:$scope.tasks});
+            render_schedule(schedule_);
+            $scope.tests = check_schedule(schedule_);
+            $scope.cpu_utilization = Math.round(check_cpu_utilization($scope.tasks) * 100);
+            $scope.schedulable = is_schedulable(schedule_);
+        }
     };
 
     $scope.isNumber = function(val) {

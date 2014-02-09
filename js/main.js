@@ -1,29 +1,10 @@
-/*
-workload = {
-    tasks: [
-        {
-            name: "task1",
-            period:9,
-            WCET:4,
-            offset:0,
-            deadline:9
-        },
-        {
-            name: "task2",
-            period:6,
-            WCET:1,
-            offset:0,
-            deadline:6
-        },
-        {
-            name: "task3",
-            period:6,
-            WCET:1,
-            offset:0,
-            deadline:6
-        }
-    ]
+String.prototype.hashCode = function(){
+    var hash = 0, i, char;
+    if (this.length == 0) return hash;
+    for (i = 0, l = this.length; i < l; i++) {
+        char  = this.charCodeAt(i);
+        hash  = ((hash<<5)-hash)+char;
+        hash |= 0; // Convert to 32bit integer
+    }
+    return hash;
 };
-*/
-
-//render_schedule(schedule(workload));

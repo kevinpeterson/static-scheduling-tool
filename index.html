@@ -60,6 +60,8 @@
         <h4>Workload Tasks</h4>
         <div>
             <form name="workloadForm" novalidate>
+                <just-gage id="test1" min=0 max=100 value="cpu_utilization" title="CPU Utilization" label="%"></just-gage>
+
                 <!-- table -->
                 <table class="table table-bordered table-hover table-condensed">
                     <tr style="font-weight: bold">
@@ -70,47 +72,47 @@
                         <td style="width:10%">Deadline</td>
                         <td style="width:10%"><span>Action</span></td>
                     </tr>
-                    <tr ng-repeat="task in tasks">
+                    <tr ng-repeat="task in tasks | orderBy:'name'">
                         <td>
                             <input type="text" name="name" ng-model="task.name" required/>
                             <p class="error" ng-show="workloadForm.name.$invalid">Not valid</p>
                         </td>
                         <td>
-                            <input type="number" name="period{{$index}}" min="1" ng-model="task.period" required/>
-                            <p class="error" ng-show="workloadForm.period{{$index}}.$invalid">Not valid</p>
+                            <input type="number" name="period{{task.id}}" min="1" ng-model="task.period" required/>
+                            <p class="error" ng-show="workloadForm.period{{task.id}}.$invalid">Not valid</p>
                         </td>
                         <td>
-                            <input type="number" name="WCET{{$index}}" min="1"
+                            <input type="number" name="WCET{{task.id}}" min="1"
                                    ui-validate="'$value <= task.period'"
                                    ui-validate-watch="'task.period'"
                                    ng-model="task.WCET"
                                    required/>
-                            <p class="error" ng-show="workloadForm.WCET{{$index}}.$invalid">Not valid</p>
+                            <p class="error" ng-show="workloadForm.WCET{{task.id}}.$invalid">Not valid</p>
                         </td>
                         <td>
-                            <input type="number" name="offset{{$index}}" min="0"
+                            <input type="number" name="offset{{task.id}}" min="0"
                                    ui-validate="'$value < task.period'"
                                    ui-validate-watch="'task.period'"
                                    ng-model="task.offset"
                                    />
-                            <p class="error" ng-show="workloadForm.offset{{$index}}.$invalid">Not valid</p>
+                            <p class="error" ng-show="workloadForm.offset{{task.id}}.$invalid">Not valid</p>
                         </td>
                         <td>
-                            <input type="number" name="deadline{{$index}}" min="0"
+                            <input type="number" name="deadline{{task.id}}" min="0"
                                    ui-validate="'$value <= task.period'"
                                    ui-validate-watch="'task.period'"
                                    ng-model="task.deadline"
                                    />
-                            <p class="error" ng-show="workloadForm.deadline{{$index}}.$invalid">Not valid</p>
+                            <p class="error" ng-show="workloadForm.deadline{{task.id}}.$invalid">Not valid</p>
                         </td>
                         <td><button type="button" class="btn btn-danger pull-right" ng-click="deleteTask(task)">Remove Task</button></td>
                     </tr>
+
                 </table>
 
                 <!-- buttons -->
                 <div class="btn-edit">
                     <button type="button" class="btn btn-danger pull-right" ng-click="addTask()">Add Task</button>
-                    <button type="button" ng-disabled="workloadForm.$invalid" ng-click="schedule()" class="btn btn-primary">Schedule</button>
                 </div>
             </form>
 
@@ -121,6 +123,14 @@
         </div>
 
         <h4>Verification</h4>
+
+        <div ng-if="schedulable">
+            <h3><span class="label label-success">Schedulable - You're good, Jim.</span></h3>
+        </div>
+        <div ng-if="!schedulable">
+            <h3><span class="label label-danger">Not Schedulable - Hope you packed your 'chute</span></h3>
+        </div>
+
         <div ng-repeat="test in tests">
             {{test.test}}
             <ul ng-repeat="(key,result) in test.results">
@@ -141,6 +151,9 @@
         <script src="js/vendor/bootstrap.min.js"></script>
         <script src="js/vendor/angular.min.js"></script>
         <script src="js/vendor/validate.js"></script>
+        <script src="js/vendor/raphael.2.1.0.min.js"></script>
+        <script src="js/vendor/justgage.1.0.1.min.js"></script>
+        <script src="js/vendor/ng-justgauge.js"></script>
         <script src="js/non-preemptive-static-scheduler.js"></script>
         <script src="js/schedule-checker.js"></script>
         <script src="js/schedule-render.js"></script>

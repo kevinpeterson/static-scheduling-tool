@@ -8,6 +8,10 @@
 
 */
 
+function is_schedulable(schedule){
+    return check_cpu_utilization(schedule.workload.tasks) <= 1;
+}
+
 function check_schedule(schedule){
     var test_results = [];
 
@@ -51,9 +55,9 @@ function check_each_task_executes_in_period(schedule){
 
             var job = find_job_in_period(period_start, period_end, task.name, schedule.schedule);
             if(job){
-                if((job.start >= (periods*j + task.offset))
+                if((job.start >= (period_start + task.offset))
                     &&
-                    (job.end <= (periods*j + task.deadline))){
+                    (job.end <= (period_start + task.deadline))){
                     counter++;
                 }
             }
@@ -138,4 +142,18 @@ function check_job_intervals(schedule){
     }
 
     return true;
+}
+
+function check_cpu_utilization(tasks){
+    var total_utilization = 0;
+
+    for(var i=0;i<tasks.length;i++){
+        var task = tasks[i];
+        var utilization = task.WCET / task.period;
+
+        total_utilization += utilization;
+    }
+
+    return total_utilization;
+
 }
