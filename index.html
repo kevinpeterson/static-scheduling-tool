@@ -102,7 +102,7 @@
                                    ui-validate="'$value < task.period'"
                                    ui-validate-watch="'task.period'"
                                    ng-model="task.offset"
-                                   />
+                                   required/>
                             <p class="error" ng-show="workloadForm.offset{{task.id}}.$invalid">Not valid</p>
                         </td>
                         <td>
@@ -110,7 +110,7 @@
                                    ui-validate="'$value <= task.period'"
                                    ui-validate-watch="'task.period'"
                                    ng-model="task.deadline"
-                                   />
+                                   required/>
                             <p class="error" ng-show="workloadForm.deadline{{task.id}}.$invalid">Not valid</p>
                         </td>
                         <td><button type="button" class="btn btn-danger pull-right" ng-click="deleteTask(task)">Remove Task</button></td>

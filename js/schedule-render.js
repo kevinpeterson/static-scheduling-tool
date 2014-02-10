@@ -6,7 +6,7 @@ function render_schedule(schedule) {
     slot_size = slot_size > 50 ? 50 : slot_size;
     if(slot_size < 10){
         slot_size = 10;
-        canvas.width = slot_size * schedule.hyperperiod_size + 100;
+        canvas.width = slot_size * schedule.hyperperiod_size + 200;
     } else {
         canvas.width = ideal_canvas_width;
     }
