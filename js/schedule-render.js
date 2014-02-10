@@ -1,3 +1,6 @@
+/*
+ Renders a schedule using HTML5 Canvas API.
+ */
 var ideal_canvas_width = 1200;
 
 function render_schedule(schedule) {

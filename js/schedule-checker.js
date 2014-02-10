@@ -1,11 +1,12 @@
 /*
+ Checks a generated schedule for correctness.
 
+ The following requirements are verified:
  Check your generated schedule to confirm that every job for every task
  executes at its required period between its required offset and deadline constraints,
  that the interval reserved in the schedule for
  every job is large enough for its WCET, and that the
  execution of no two jobs ever overlap
-
 */
 
 function is_schedulable(schedule){
