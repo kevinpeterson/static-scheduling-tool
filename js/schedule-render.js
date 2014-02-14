@@ -14,7 +14,7 @@ function render_schedule(schedule) {
         canvas.width = ideal_canvas_width;
     }
 
-    var x_padding = 50;
+    var x_padding = 20;
     var y_padding = 20;
 
     if (canvas.getContext) {

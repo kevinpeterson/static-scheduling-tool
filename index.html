@@ -67,10 +67,14 @@
         </div>
 
         <div>
+
             <form name="workloadForm" novalidate>
 
-                <!-- table -->
-                <table class="table table-bordered table-hover table-condensed">
+                <label for="workloadSelect">Workload:</label>
+                <select id="workloadSelect" class="form-control" ng-model="workload" ng-options="w.name for w in workloads"></select>
+
+                <label for="taskTable">Tasks:</label>
+                <table id="taskTable" class="table table-bordered table-hover table-condensed">
                     <tr style="font-weight: bold">
                         <td style="width:40%">Task Name</td>
                         <td style="width:10%">Period</td>
@@ -204,6 +208,7 @@
         <script src="js/non-preemptive-static-scheduler.js"></script>
         <script src="js/schedule-checker.js"></script>
         <script src="js/schedule-render.js"></script>
+        <script src="js/workloads.js"></script>
         <script src="js/controller.js"></script>
         <script src="js/main.js"></script>
 

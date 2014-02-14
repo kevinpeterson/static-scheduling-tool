@@ -16,10 +16,14 @@ input.ng-invalid {
     margin-top: 50px;
 }
 
-.testCase{
+.testCase {
     font-size: 12pt;
 }
 
+#workloadSelect {
+    width: auto;
+    margin-bottom: 25px;
+}
 
 
 

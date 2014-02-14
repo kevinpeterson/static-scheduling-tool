@@ -3,11 +3,14 @@ var app = angular.module("app", ['ui.validate', 'ngJustGage']);
 app.run();
 
 app.controller('Ctrl', function($scope, $filter, $q, $http) {
-    $scope.tasks = [
-        {id: 0, name: 'task1', period: 3, WCET: 1, offset: 0, deadline: 3},
-        {id: 1, name: 'task2', period: 4, WCET: 1, offset: 0, deadline: 4},
-        {id: 2, name: 'task3', period: 6, WCET: 1, offset: 0, deadline: 6}
-    ];
+    $scope.workloads = workloads;
+    $scope.workload = workloads[0];
+
+    $scope.tasks = $scope.workload.tasks;
+
+    $scope.$watch('workload', function(){
+        $scope.tasks = $scope.workload.tasks;
+    }, true);
 
     $scope.$watch('tasks', function(){
         $scope.schedule();
