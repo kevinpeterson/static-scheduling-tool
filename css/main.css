@@ -20,9 +20,14 @@ input.ng-invalid {
     font-size: 12pt;
 }
 
+.label-danger > a {
+    color: #000000;
+    text-decoration: underline;
+}
+
 #workloadSelect {
     width: auto;
-    margin-bottom: 25px;
+    margin-bottom: 5px;
 }
 
 

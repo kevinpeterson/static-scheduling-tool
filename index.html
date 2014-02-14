@@ -48,20 +48,22 @@
     <div ng-app="app" ng-controller="Ctrl" class="container">
 
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-8">
                 <div class="well well-lg">
                         <h1>Scheduler</h1>
                         <p>Non-Preemptive Deadline Monotonic Scheduling</p>
                         <p><a class="btn btn-primary btn-lg" href="./about.html">Learn more &raquo;</a></p>
                 </div>
             </div>
-            <div class="col-md-6"  class="pull-right" >
-                <just-gage id="test1" min=0 max=100 value="cpu_utilization" title="CPU Utilization" label="%"></just-gage>
+            <div class="col-md-4">
+                <div id="smallbuddy" style="width:100%; max-height:150px">
+                    <just-gage id="test1" min=0 max=100 value="cpu_utilization" title="CPU Utilization" label="%"></just-gage>
+                </div>
                 <div ng-if="schedulable">
                     <h3 style="text-align:center;"><span class="label label-success">Schedulable - All Systems Go!</span></h3>
                 </div>
                 <div ng-if="!schedulable">
-                    <h3 style="text-align:center;"><span class="label label-danger">Not Schedulable - Hope you packed your 'chute</span></h3>
+                    <h3 style="text-align:center;"><span class="label label-danger">Not Schedulable - <a href="#verification">see errors below.</a></span></h3>
                 </div>
             </div>
         </div>
@@ -70,13 +72,16 @@
 
             <form name="workloadForm" novalidate>
 
-                <label for="workloadSelect">Workload:</label>
-                <select id="workloadSelect" class="form-control" ng-model="workload" ng-options="w.name for w in workloads"></select>
-
-                <label for="taskTable">Tasks:</label>
+                <div class="row">
+                    <div class="col-md-12">
+                        <select id="workloadSelect" class="form-control" ng-model="workload" ng-options="w.name for w in workloads"></select>
+                    </div>
+                </div>
                 <table id="taskTable" class="table table-bordered table-hover table-condensed">
                     <tr style="font-weight: bold">
-                        <td style="width:40%">Task Name</td>
+                        <td style="width:40%">
+                            Task Name
+                        </td>
                         <td style="width:10%">Period</td>
                         <td style="width:10%">WCET</td>
                         <td style="width:10%">Offset</td>
@@ -137,6 +142,7 @@
         </div>
 
         <hr>
+        <div id="verification"></div>
         <h3><span class="glyphicon glyphicon-ok-circle"></span> Verification</h3>
         <hr>
 

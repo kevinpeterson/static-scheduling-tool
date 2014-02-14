@@ -10,7 +10,7 @@ angular.module("ngJustGage", [])
                 label: '@',
                 value: '='
             },
-            template: '<div id={{id}}-justgage></div>',
+            template: '<div id="{{id}}-justgage"></div>',
             link: function (scope) {
                 $timeout(function () {
                     var g = new JustGage({
@@ -20,7 +20,7 @@ angular.module("ngJustGage", [])
                         title: scope.title,
                         label: scope.label,
                         value: scope.value
-                    })
+                    });
 
                     scope.$watch('value', function (updatedValue) {
                         if (updatedValue) {
