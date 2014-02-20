@@ -71,12 +71,11 @@
         <div>
 
             <form name="workloadForm" novalidate>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <select id="workloadSelect" class="form-control" ng-model="workload" ng-options="w.name for w in workloads"></select>
-                    </div>
+                <div>
+                    <label>Select a Workload:</label>
+                    <select id="workloadSelect" class="form-control" ng-model="workload" ng-options="w.name for w in workloads"></select>
                 </div>
+
                 <table id="taskTable" class="table table-bordered table-hover table-condensed">
                     <tr style="font-weight: bold">
                         <td style="width:40%">
