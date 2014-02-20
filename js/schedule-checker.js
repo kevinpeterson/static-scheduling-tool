@@ -9,6 +9,9 @@
  execution of no two jobs ever overlap
 */
 
+/*
+ Check the various conditions required for a workload to be schedulable.
+ */
 function is_schedulable(schedule){
     return (check_cpu_utilization(schedule.workload.tasks) <= 1)
         &&
@@ -21,6 +24,10 @@ function is_schedulable(schedule){
         (check_job_intervals(schedule));
 }
 
+/*
+ Ensure that jobs of tasks execute within period deadlines, respecting
+ offset and deadline times (if different than the period).
+ */
 function check_each_task_executes_in_period(schedule){
     var results = {};
 
@@ -68,10 +75,17 @@ function initialize_empty_array(size){
     return zeros;
 }
 
+/*
+ Make sure no jobs have be left 'unscheduled' - or, could not fit in the hyperperiod.
+ */
 function check_no_jobs_unscheduled(schedule){
     return schedule.overrun;
 }
 
+
+/*
+ Make sure no two jobs are executing at the same time.
+ */
 function check_no_jobs_overlap(schedule){
     var timing_arrays = []
 
@@ -86,13 +100,17 @@ function check_no_jobs_overlap(schedule){
         timing_arrays.push(timing_array);
     }
 
+    // initialize an array of '0's equal to the hyperperiod size
     var check_array = initialize_empty_array(schedule.hyperperiod_size);
+
+    // increment that slot in the array if a running job occupies that time slot
     for(var i=0;i<timing_arrays.length;i++){
         for(var j=0;j<timing_arrays[i].length;j++){
             check_array[j] = check_array[j] + timing_arrays[i][j];
         }
     }
 
+    // if any slot is greater than 1, it means two or more jobs were executing in that slot
     for(var i=0;i>check_array.length;i++){
         if(check_array[i] > 1){
             return false;
@@ -112,6 +130,9 @@ function find_job_in_period(start, end, task, jobs){
     return null;
 }
 
+/*
+ Ensure that enough time has been allocated to allow for the required WCET.
+ */
 function check_job_intervals(schedule){
     var tasks = schedule.workload.tasks;
 
@@ -134,6 +155,9 @@ function check_job_intervals(schedule){
     return true;
 }
 
+/*
+ Calculate CPU utilization for a set of tasks in a workload.
+ */
 function check_cpu_utilization(tasks){
     var total_utilization = 0;
 
