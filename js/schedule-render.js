@@ -17,6 +17,8 @@ function render_schedule(schedule) {
     var x_padding = 20;
     var y_padding = 20;
 
+    canvas.height = (slot_size + (y_padding *2) + (schedule.workload.tasks.length * 20));
+
     if (canvas.getContext) {
         var context = canvas.getContext('2d');
         context.clearRect(0, 0, canvas.width, canvas.height);
