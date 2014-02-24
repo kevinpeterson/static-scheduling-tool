@@ -24,6 +24,7 @@ function is_schedulable(schedule){
         (check_job_intervals(schedule));
 }
 
+
 /*
  Ensure that jobs of tasks execute within period deadlines, respecting
  offset and deadline times (if different than the period).
@@ -69,11 +70,16 @@ function check_each_task_executes_in_period(schedule){
     return {total_result: result, task_results: results};
 }
 
+
+/*
+ Initialize an array of 0's of a given size.
+ */
 function initialize_empty_array(size){
     var zeros = [];
     for (var i = 0; i < size; i++) zeros[i] = 0;
     return zeros;
 }
+
 
 /*
  Make sure no jobs have be left 'unscheduled' - or, could not fit in the hyperperiod.
@@ -120,6 +126,11 @@ function check_no_jobs_overlap(schedule){
     return true;
 }
 
+
+/*
+ Given a start/end clock time, a task definition (WCET, offset, deadline, period),
+ find a job that can execute within that start/end time.
+ */
 function find_job_in_period(start, end, task, jobs){
     for(var i=0;i<jobs.length;i++){
         var job = jobs[i];
@@ -129,6 +140,7 @@ function find_job_in_period(start, end, task, jobs){
     }
     return null;
 }
+
 
 /*
  Ensure that enough time has been allocated to allow for the required WCET.
@@ -154,6 +166,7 @@ function check_job_intervals(schedule){
 
     return true;
 }
+
 
 /*
  Calculate CPU utilization for a set of tasks in a workload.
