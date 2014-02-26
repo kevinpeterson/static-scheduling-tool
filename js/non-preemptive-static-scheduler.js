@@ -91,7 +91,6 @@ function check_input(workload){
  5. The output of step 4 should be a queue of all jobs in the order in which they must
  execute. Next, we'll take this output and simulate the hyperperiod based on a simulated
  system clock (see function 'simulate_hyperperiod').
-
  */
 function schedule(workload){
     workload = check_input(workload);
@@ -149,7 +148,7 @@ function schedule(workload){
  ===============
  1. Start a simulated clock.
  2. Give the job queue from function 'schedule,' get the first job in the queue.
- 3. Start simluation of the current job. Note the current time as its 'start' time,
+ 3. Start simuluation of the current job. Note the current time as its 'start' time,
  and record its 'end' time as the 'start' time plus its WCET.
  4. Advance the simulated clock until the job is done running.
  5. Once the the simulation for that job is done, we will know its start and
@@ -160,7 +159,6 @@ function schedule(workload){
  8. If the simulated clock time expires and we still have jobs left to be scheduled,
  add them to an 'overrun' list, so that we can track unschedulable jobs.
  9. Return the simulated schedule.
-
  */
 function simulate_hyperperiod(job_queue, hp_size){
     var schedule = [];
