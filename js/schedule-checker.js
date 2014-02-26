@@ -48,6 +48,8 @@ function check_each_task_executes_in_period(schedule){
             var period_start = j*task.period;
             var period_end = period_start + task.period;
 
+            // find a job in the period and make sure it starts >= its offset
+            // and ends <= its deadline. If not, add it to the 'missed deadlines' list to report back
             var job = find_job_in_period(period_start, period_end, task.name, schedule.schedule);
             if(job){
                 if((job.start >= (period_start + task.offset))
@@ -158,6 +160,8 @@ function check_job_intervals(schedule){
 
     for(var i=0;i<jobs.length;i++){
         var job = jobs[i];
+
+        // calculate the intervale and make sure the WCET can fit
         var interval = job.end - job.start;
         if(interval < tasks_obj[job.task].WCET){
             return false;

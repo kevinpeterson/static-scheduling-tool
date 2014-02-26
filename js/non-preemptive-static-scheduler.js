@@ -179,8 +179,10 @@ function simulate_hyperperiod(job_queue, hp_size){
         };
 
         if(debug) console.log("Running:", running_job.task, " at:", i);
+
         // advance the clock while the job is 'running'
         while(running(running_job, i)){ i++ };
+
         if(debug) console.log("Ending:", running_job.task, " at:", i);
 
         // add it to the schedule
